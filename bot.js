@@ -30,7 +30,6 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 
   // when a tweet is found
   stream.on('data', function (tweet) {
-	
 	if(tweet.user.screen_name != botName){
 		console.log("\nFound a tweet!\n__________________________\n");
 		console.log("User: " + tweet.user.screen_name);
@@ -42,7 +41,7 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 		console.log("Replying with message: " + message);
 		
 		count+=1;
-		console.log("message count: " + count);
+		console.log("message count: " + count + "\n");
 		
 		if(count == countMax)
 		{
@@ -57,5 +56,7 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
     stream.on('error', function (error) {
       console.log(error);
     });
-  });	
+	
+	
+  });
 });
