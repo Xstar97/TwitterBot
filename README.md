@@ -13,7 +13,7 @@ nodejs twitter bot
 
 3. create a dir for your bot and then npm init inside it
 - go through the steps for the project....
-    - npm install twitter dotenv bluebird --save
+    - npm install twitter dotenv bluebird sleep --save
 
 4. create these files with this command and copy and paste the data from this repo:
     - touch bot.js
