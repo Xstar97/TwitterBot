@@ -96,8 +96,8 @@ const postReplyWithMedia = (client, mediaFilePath, message, replyTweet) => {
                 }
 
                 //print the text of the tweet we sent out
-                console.log(tweetReply.text);
-				console.log("media used: " + mediaFilePath);
+                console.log("\n" + tweetReply.text);
+				console.log("\nmedia used: " + mediaFilePath);
             });
         })
 }
@@ -120,8 +120,8 @@ const postReplyWithImg = (client, mediaFilePath, message, replyTweet) => {
 				if (error) {
 					console.log(error)
 				} else {
-					console.log(tweetReply.text);
-					console.log("media used: " + mediaFilePath);
+					console.log("\n" + tweetReply.text);
+				    console.log("\nmedia used: " + mediaFilePath);
 				}
 			})
 		}
@@ -143,7 +143,7 @@ const postReply = (client, message, replyTweet) => {
         }
 
         //print the text of the tweet we sent out
-        console.log(tweetReply.text);
+        console.log("\n" + tweetReply.text + "\n");
     });
 }
 
