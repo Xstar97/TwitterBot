@@ -15,7 +15,7 @@ nodejs twitter bot
 - go through the steps for the project....
     - npm install twitter dotenv bluebird sleep --save
 
-4. create these files with this command and copy and paste the data from this repo:
+4. create these files and copy and paste the data from this repo:
     - bot.js
     - config.js
     - .env
