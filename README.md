@@ -13,29 +13,29 @@ nodejs twitter bot
 
 3. create a dir for your bot and then npm init inside it
 - go through the steps for the project....
-- npm install twitter dotenv bluebird --save
+    - npm install twitter dotenv bluebird --save
 
 4. create these files with this command and copy and paste the data from this repo:
-- touch bot.js
-- touch config.js
-- touch .env
+    - touch bot.js
+    - touch config.js
+    - touch .env
 
 5. edit .env file place your keys and secrets in order
 - api key and secret the first two slots
 - user key and secret the last two slots
 
 6. edit bot.js
-- var countMax = 6;//max messages sent in a given time
-- var sleepTimer=2//this is to make the bot sleep for X min(s)
-- var tag = "#word";//filter for twitter stream
-- var botName = "twitterUserName";//requried if you dont want spam yourself if you use the filtered word/or #
-- let msg = 
-[
-'message 1',
-'message 2',
-'message 3',
-'there\'s another message here'
-]//randomly selected messages to be used in the reply
+    - var countMax = 6;//max messages sent in a given time
+    - var sleepTimer=2//this is to make the bot sleep for X min(s)
+    - var tag = "#word";//filter for twitter stream
+    - var botName = "twitterUserName";//requried if you dont want spam yourself if you use the filtered word/or #
+    - let msg = 
+    [
+    'message 1',
+    'message 2',
+    'message 3',
+    'there\'s another message here'
+    ]//randomly selected messages to be used in the reply
 
 - dont make the variable countMax too high or your bot will be considered spam if it messages are too much, keep it under 25 or better 10
 -  once the reply message counter has reached its max, it will sleep for X mins and then auto  start again
