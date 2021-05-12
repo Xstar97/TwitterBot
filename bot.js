@@ -21,7 +21,7 @@ return msg[mth];
 
 function counterInc(){
 	count+=1;
-	console.log("\nmessage count: " + count + "\n");
+	console.log("message count: " + count + "\n");
 }
 
 function sleeper(){
