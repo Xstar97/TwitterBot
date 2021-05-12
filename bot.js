@@ -25,38 +25,49 @@ function getMsg(){
 return msg[mth];	
 }
 
+//Seaching a filtered stream of tweets
 client.stream('statuses/filter', { track: tag }, function (stream) {
-  console.log("Searching for " + tag + " tweets...");
-
-  // when a tweet is found
-  stream.on('data', function (tweet) {
-	if(tweet.user.screen_name != botName){
-		console.log("\nFound a tweet!\n__________________________\n");
-		console.log("User: " + tweet.user.screen_name);
-		console.log("tweet says...\n", tweet.text + "\n");
+	console.log("Searching for " + tag + " tweets...");
+	// when a tweet is found
+	stream.on('data', function (tweet) {
 		
-		var message = getMsg();
-		
-		postReply(client, message, tweet);
-		console.log("Replying with message: " + message);
-		
-		count+=1;
-		console.log("message count: " + count + "\n");
-		
-		if(count == countMax)
-		{
-			console.log("meesage count max of " + countMax + ": " + count);
-			console.log("shutting down for " + sleepTimer + " min(s)");
-			sleep(sleepTimer*60000);
-			count = 0;
-			console.log("starting up again boy!");
+		//checking if tweet auther is not the bot or author
+		if(tweet.user.screen_name != botName){
+			if(tweet.text.length != 0 || tweet.text != null){
+				//logging a tweet was found
+				console.log("\nFound a tweet!\n__________________________\n");
+				//user name
+				console.log("User: " + tweet.user.screen_name);
+				//user's tweet
+				console.log("tweet says...\n", tweet.text);
+				//our message
+				var message = getMsg();
+				//tweeting victim
+				postReply(client, message, tweet);
+				
+				//incrementing counter
+				count+=1;
+				console.log("\nmessage count: " + count + "\n");
+				
+				//sleeper function
+				if(count == countMax)
+				{
+					console.log("meesage count max of " + countMax + ": " + count);
+					console.log("shutting down for " + sleepTimer + " min(s)");
+					//sleeps for x mins
+					sleep(sleepTimer*60000);
+					//resets counter
+					count = 0;
+					console.log("starting up again boy!");
+				}
 		}
+		//end of the line
 	}
 
     stream.on('error', function (error) {
       console.log(error);
     });
 	
-	
   });
+  
 });
