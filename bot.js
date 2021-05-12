@@ -32,7 +32,7 @@ function sleeper(){
 		//sleeps for x mins
 		sleep.sleep(sleepTimer * 60);	
 		count = 0;
-		console.log("starting up again!");
+		console.log("\nstarting up again!\n");
 	}
 	}catch(e){
 		console.log("e: " + e);
@@ -47,10 +47,10 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 	stream.on('data', function (tweet) {
 		
 		//checking if tweet auther is not the bot or author
-		var notUserName = tweet.user.screen_name != botName;
-		var tweetData1 = tweet.text.length != 0 && tweet.text != null || tweet.text.includes(tag);
+		var userName = tweet.user.screen_name != botName;
+		var tweetData = tweet.text.includes(tag);//tweet.text.length != 0 && tweet.text != null
 		
-		if(notUserName || tweetData1)
+		if(userName || tweetData)
 		{
 			if(count <= countMax)
 			{
