@@ -16,9 +16,9 @@ nodejs twitter bot
     - npm install twitter dotenv bluebird sleep --save
 
 4. create these files with this command and copy and paste the data from this repo:
-    - touch bot.js
-    - touch config.js
-    - touch .env
+    - bot.js
+    - config.js
+    - .env
 
 5. edit .env file place your keys and secrets in order
 - api key and secret the first two slots
@@ -43,17 +43,9 @@ nodejs twitter bot
 -  msg array can be infinite...or just 1
 -  if you use ' in your message, you have to add a \ before it. ex "there\'s" in order to make the sentence whole.
 
-side note
-add this if you want post videos+message instead
-postReplyWithMedia(client, "./sample-media/video.mp4", message);
-for other media such as gif or images
-edit config.js
-initMediaUpload
-i wont go into a further detail
-but i may edit it myself to support other media automatically, somewhat.
-
 7. once you're done with everything its time to run the bot
-- run node bot.js
+- run your bot:
+- node bot.js
 - your bot should start up and search for your filtered tweets and spam the masses :)
 
 notes:
