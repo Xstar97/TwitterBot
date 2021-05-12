@@ -48,9 +48,9 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 		
 		//checking if tweet auther is not the bot or author
 		var notUserName = tweet.user.screen_name != botName;
-		var tweetData1 = tweet.text.length != 0 && tweet.text != null;
-		var tweetData2 = tweet.text.includes(tag);
-		if(notUserName && tweetData1 && tweetData2)
+		var tweetData1 = tweet.text.length != 0 && tweet.text != null || tweet.text.includes(tag);
+		
+		if(notUserName || tweetData1)
 		{
 			if(count <= countMax)
 			{
