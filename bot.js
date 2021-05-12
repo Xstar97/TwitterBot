@@ -10,7 +10,7 @@ function sleep(milliseconds) {
 }
 var count = 0;
 var countMax = 10;//sleeps once max count is hit.
-var sleepTimer=3//mins
+var sleepTimer=3;//mins
 var tag = "random word filter";//#noob
 var botName = "userName";
 let msg = 
