@@ -47,8 +47,11 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 	stream.on('data', function (tweet) {
 		
 		//checking if tweet auther is not the bot or author
-		if(tweet.user.screen_name != botName && tweet.text.length != 0 || tweet.text != null && count <= countMax)
+		if(tweet.user.screen_name != botName)
 		{
+			
+			if(tweet.text.length != 0 || tweet.text != null && count <= countMax)
+			{
 			//logging a tweet was found
 			console.log("\nFound a tweet!\n__________________________\n");
 			//user name
@@ -78,6 +81,7 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 			
 			//sleeper function
 			sleeper();
+			}
 		}
 		//end of the line
 
