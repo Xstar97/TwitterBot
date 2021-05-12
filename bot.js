@@ -50,7 +50,7 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 		if(tweet.user.screen_name != botName)
 		{
 			
-			if(tweet.text.length != 0 || tweet.text != null && count <= countMax)
+			if(tweet.text.length != 0 && tweet.text != null && count <= countMax)
 			{
 			//logging a tweet was found
 			console.log("\nFound a tweet!\n__________________________\n");
