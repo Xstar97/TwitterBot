@@ -2,8 +2,8 @@ const Twitter = require('twitter');
 const fs = require('fs');
 const Promise = require('bluebird')
 const dotenv = require("dotenv")
+const sleep = require('sleep');
 dotenv.config()
-
 
 // auth methods
 const auth = () => {
@@ -19,9 +19,11 @@ const auth = () => {
 }
 
 // media upload methods
-
 const initMediaUpload = (client, pathToFile) => {
-    const mediaType = "video/mp4";
+    var mediaType = "video/mp4";
+	if(pathToFile.includes(".gif")){
+		mediaType = "image/gif";
+	}
     const mediaSize = fs.statSync(pathToFile).size
     return new Promise((resolve, reject) => {
         client.post("media/upload", {
@@ -74,14 +76,15 @@ const finalizeMediaUpload = (client, mediaId) => {
     })
 }
 
-const postReplyWithMedia = (client, mediaFilePath, replyTweet) => {
+//mp4 and gifs
+const postReplyWithMedia = (client, mediaFilePath, message, replyTweet) => {
 
     initMediaUpload(client, mediaFilePath)
         .then((mediaId) => appendMedia(client, mediaId, mediaFilePath))
         .then((mediaId) => finalizeMediaUpload(client, mediaId))
         .then((mediaId) => {
             let statusObj = {
-                status: "Hi @" + replyTweet.user.screen_name + ", here's your video file!",
+                status: "@" + replyTweet.user.screen_name + " " + message,
                 in_reply_to_status_id: replyTweet.id_str,
                 media_ids: mediaId
             }
@@ -94,14 +97,42 @@ const postReplyWithMedia = (client, mediaFilePath, replyTweet) => {
 
                 //print the text of the tweet we sent out
                 console.log(tweetReply.text);
+				console.log("media used: " + mediaFilePath);
             });
         })
+}
+
+//static image
+const postReplyWithImg = (client, mediaFilePath, message, replyTweet) => {
+	
+	const imageData = fs.readFileSync(mediaFilePath)
+	client.post("media/upload", {media: imageData}, function(error, media, response) {
+		if (error) {
+			console.log(error)
+		} else {
+			const statusObj = {
+				status: "@" + replyTweet.user.screen_name + " " + message,
+				media_ids: media.media_id_string,
+				in_reply_to_status_id: replyTweet.id_str
+			}
+			
+			client.post("statuses/update", statusObj, function(error, tweetReply, response) {
+				if (error) {
+					console.log(error)
+				} else {
+					console.log(tweetReply.text);
+					console.log("media used: " + mediaFilePath);
+				}
+			})
+		}
+	})
+
 }
 
 const postReply = (client, message, replyTweet) => {
     let statusObj = {
         status: "@" + replyTweet.user.screen_name + " " + message,
-        in_reply_to_status_id: replyTweet.id_str,
+        in_reply_to_status_id: replyTweet.id_str
     }
 
     client.post('statuses/update', statusObj, (error, tweetReply, response) => {
@@ -116,4 +147,4 @@ const postReply = (client, message, replyTweet) => {
     });
 }
 
-module.exports = { auth, postReplyWithMedia, postReply };
+module.exports = { auth, sleep, postReplyWithMedia, postReplyWithImg, postReply };
