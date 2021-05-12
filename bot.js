@@ -1,13 +1,7 @@
-const { auth, postReplyWithMedia, postReply  } = require('./config.js');
-
+const { auth,sleep, postReplyWithMedia, postReplyWithImg, postReply  } = require('./config.js');
 const client = auth();
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
+
+//variables
 var count = 0;
 var countMax = 10;//sleeps once max count is hit.
 var sleepTimer=3;//mins
@@ -25,6 +19,27 @@ function getMsg(){
 return msg[mth];	
 }
 
+function counterInc(){
+	count+=1;
+	console.log("\nmessage count: " + count + "\n");
+}
+
+function sleeper(){
+	try{
+	if(count > countMax){
+		console.log("meesage count max of " + countMax + ": " + count);
+		console.log("shutting down for " + sleepTimer + " min(s)");
+		//sleeps for x mins
+		sleep.sleep(sleepTimer * 60);	
+		count = 0;
+		console.log("starting up again!");
+	}
+	}catch(e){
+		console.log("e: " + e);
+	}
+}
+
+
 //Seaching a filtered stream of tweets
 client.stream('statuses/filter', { track: tag }, function (stream) {
 	console.log("Searching for " + tag + " tweets...");
@@ -32,37 +47,39 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 	stream.on('data', function (tweet) {
 		
 		//checking if tweet auther is not the bot or author
-		if(tweet.user.screen_name != botName){
-			if(tweet.text.length != 0 || tweet.text != null){
-				//logging a tweet was found
-				console.log("\nFound a tweet!\n__________________________\n");
-				//user name
-				console.log("User: " + tweet.user.screen_name);
-				//user's tweet
-				console.log("tweet says...\n", tweet.text);
-				//our message
-				var message = getMsg();
-				//tweeting victim
-				postReply(client, message, tweet);
+		if(tweet.user.screen_name == botName && tweet.text.length != 0 || tweet.text != null && count <= countMax)
+		{
+			//logging a tweet was found
+			console.log("\nFound a tweet!\n__________________________\n");
+			//user name
+			console.log("User: " + tweet.user.screen_name);
+			//user's tweet
+			console.log("tweet says...\n", tweet.text);
+			
+			//our message
+			var message = getMsg();
+			
+			//TODO uncomment the tweet option
+			//tweet the victim
+			//postReply(client, message, tweet);
+			//console.log("\nreplying with a txt\n");
+			
+			//postReplyWithImg(client, "./img.png", message, tweet);
+			//console.log("\nreplying with a image and txt\n");
 				
-				//incrementing counter
-				count+=1;
-				console.log("\nmessage count: " + count + "\n");
-				
-				//sleeper function
-				if(count == countMax)
-				{
-					console.log("meesage count max of " + countMax + ": " + count);
-					console.log("shutting down for " + sleepTimer + " min(s)");
-					//sleeps for x mins
-					sleep(sleepTimer*60000);
-					//resets counter
-					count = 0;
-					console.log("starting up again boy!");
-				}
+		        //postReplyWithMedia(client, "./animGif.gif", message, tweet);
+			//console.log("\nreplying with a gif and txt\n");
+			
+		        //postReplyWithMedia(client, "./video.mp4", message, tweet);
+			//console.log("\nreplying with a vid and txt\n");
+			
+			//incrementing counter
+			counterInc();
+			
+			//sleeper function
+			sleeper();
 		}
 		//end of the line
-	}
 
     stream.on('error', function (error) {
       console.log(error);
