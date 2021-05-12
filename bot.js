@@ -47,10 +47,12 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 	stream.on('data', function (tweet) {
 		
 		//checking if tweet auther is not the bot or author
-		if(tweet.user.screen_name != botName)
+		var notUserName = tweet.user.screen_name != botName;
+		var tweetData1 = tweet.text.length != 0 && tweet.text != null;
+		var tweetData2 = tweet.text.includes(tag);
+		if(notUserName && tweetData1 && tweetData2)
 		{
-			
-			if(tweet.text.length != 0 && tweet.text != null && count <= countMax)
+			if(count <= countMax)
 			{
 			//logging a tweet was found
 			console.log("\nFound a tweet!\n__________________________\n");
