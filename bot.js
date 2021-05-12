@@ -1,4 +1,4 @@
-const { auth,sleep, postReplyWithMedia, postReplyWithImg, postReply  } = require('./config.js');
+const { auth, sleep, postReplyWithMedia, postReplyWithImg, postReply  } = require('./config.js');
 const client = auth();
 
 //variables
