@@ -47,7 +47,7 @@ client.stream('statuses/filter', { track: tag }, function (stream) {
 		{
 			console.log("meesage count max of " + countMax + ": " + count);
 			console.log("shutting down for " + sleepTimer + " min(s)");
-			sleep(sleepTimer*60000)
+			sleep(sleepTimer*60000);
 			count = 0;
 			console.log("starting up again boy!");
 		}
