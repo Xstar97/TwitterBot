@@ -103,43 +103,49 @@ const postReplyWithMedia = (client, mediaFilePath, message, replyTweet) => {
 		.then((mediaId) => appendMedia(client, mediaId, mediaFilePath))
         .then((mediaId) => finalizeMediaUpload(client, mediaId))
         .then((mediaId) => {
-            let statusObj = {
+            let obj = {
                 status: "@" + replyTweet.user.screen_name + " " + message,
                 in_reply_to_status_id: replyTweet.id_str,
                 media_ids: mediaId
             }
-            client.post('statuses/update', statusObj,  function(error, tweet, response) {	
-                //if we get an error print it out
-                if (error) {
-                    console.log(error);
-                }
-
-                //print the text of the tweet we sent out
-                console.log("replied: " + tweet.text);
-				console.log("\nmedia used: " + mediaFilePath + "\n");
-				});
-		//
+			_postReply(client, obj, message, replyTweet);
+			console.log("\nmedia used: " + mediaFilePath + "\n");
 		});		
 	}else 
 	{
 		console.log("media not supported!");
+		postReply(client, message, replyTweet);
 	}
 }
 
+const postTweetWithMedia = (client, mediaFilePath, message) => {
+	if(supportedMedia(mediaFilePath) != "")
+	{
+		initMediaUpload(client, mediaFilePath)
+		.then((mediaId) => appendMedia(client, mediaId, mediaFilePath))
+        .then((mediaId) => finalizeMediaUpload(client, mediaId))
+        .then((mediaId) => {
+            let obj = {
+                status: message,
+                media_ids: mediaId
+            }
+			_postTweet(client, obj, message, replyTweet);
+			console.log("\nmedia used: " + mediaFilePath + "\n");
+		});		
+	}else 
+	{
+		console.log("media not supported!");
+		postReply(client, message, replyTweet);
+	}
+}
+
+
 const postReply = (client, message, replyTweet) => {
-    
-	let statusObj = {
+	let obj = {
         status: "@" + replyTweet.user.screen_name + " " + message,
         in_reply_to_status_id: replyTweet.id_str
     }
-	
-	client.post('statuses/update', statusObj)
-	.then(function (tweet) {
-		console.log("\ntweeted: user @" + tweet.user.screen_name + "\n" + tweet.text + "\n");
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+	_postReply(client, obj, message, replyTweet);
 }
 
 const postTweet = (client, message) => {
@@ -148,11 +154,7 @@ const postTweet = (client, message) => {
         status: message,
     }
 	// tweet
-	client.post('statuses/update', statusObj)
-	.then(tweet => {
-		console.log('\ntweeted: ' + tweet.text);
-		console.log('\ntweeted successfully!\n');
-	}).catch(console.error);
+	_postTweet(client, obj, message);
 }
 
 const postReTweet = (client, message, reTweet) => {
@@ -162,12 +164,7 @@ const postReTweet = (client, message, reTweet) => {
         id: reTweet.id_str
     }
 	// Retweet a tweet using its id_str attribute
-	client.post('statuses/retweet', obj)
-	.then(result => {
-		console.log('user: @' + reTweet.user.screen_name);
-		console.log('\ntweeted: ' + reTweet.text);
-		console.log('\nRetweeted successfully!\n');
-	}).catch(console.error);
+	_postReTweet(client, obj, message, reTweet);
 }
 
 const postLike = (client, message, likeTweet) => {
@@ -176,12 +173,7 @@ const postLike = (client, message, likeTweet) => {
         id: likeTweet.id_str
     }
 	// Like a tweet /w id
-	client.post('favorites/create', obj)
-	.then(result => {
-		console.log('user: @' + likeTweet.user.screen_name);
-		console.log('\ntweeted: ' + likeTweet.text);
-		console.log('\nLiked tweet successfully!\n');
-		}).catch(console.error);
+	_postLike(client, obj, message, likeTweet);
 }
 
 const postFollowUser = (client, message, twit) => {
@@ -189,6 +181,50 @@ const postFollowUser = (client, message, twit) => {
 	let obj = {
         screen_name: twit.screen_name
     }
+	// Follow a user using screen_name
+	_postFollowUser(client, obj, message, twit);
+}
+
+//init methods
+const _postReply = (client, obj, message, replyTweet) => {
+	client.post('statuses/update', obj)
+	.then(function (tweet) {
+		console.log("\ntweeted: " + tweet.text + "\n");
+	}).catch(function (error) {
+		console.log(error);
+	});
+}
+
+const _postTweet = (client, obj, message) => {
+	// tweet
+	client.post('statuses/update', obj)
+	.then(tweet => {
+		console.log('\ntweeted: ' + tweet.text);
+	}).catch(console.error);
+}
+
+const _postReTweet = (client, obj, message, reTweet) => {
+	// Retweet a tweet using its id_str attribute
+	client.post('statuses/retweet', obj)
+	.then(tweet => {
+		console.log('user: @' + reTweet.user.screen_name);
+		console.log('\nRetweeted: ' + reTweet.text);
+		console.log('\nbot tweeted: ' + tweet.text);
+	}).catch(console.error);
+}
+
+const _postLike = (client, obj, message, likeTweet) => {
+	
+	// Like a tweet /w id
+	client.post('favorites/create', obj)
+	.then(tweet => {
+		console.log('user: @' + likeTweet.user.screen_name);
+		console.log('\ntweeted: ' + tweet.text);
+		console.log('\nLiked tweet successfully!\n');
+		}).catch(console.error);
+}
+
+const _postFollowUser = (client, obj, message, twit) => {
 	// Follow a user using screen_name
 	client.post('friendships/create', obj)
     .then(result => {
