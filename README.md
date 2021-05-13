@@ -19,6 +19,7 @@ nodejs twitter bot
     - bot.js
     - config.js
     - .env
+    - data.json
 
 5. edit .env file place your keys and secrets in order
 - api key and secret the first two slots
