@@ -11,18 +11,8 @@ dotenv.config()
 
 // auth methods
 const auth = () => {
-    let secret = {
-        consumer_key: process.env.API_KEY,
-        consumer_secret: process.env.SECRET_KEY,
-        access_token_key: process.env.ACCESS_TOKEN,
-        access_token_secret: process.env.ACCESS_TOKEN_SECRET//,
-		//request_options: 
-		//{
-		//	proxy: 'http://myproxyserver.com:1234'
-		//}
-    }
-
-    var client = new Twitter(secret);
+   let keys  = configData.keys;
+   var client = new Twitter(keys);
     return client;
 }
 
