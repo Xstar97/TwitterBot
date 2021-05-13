@@ -29,18 +29,15 @@ function counterInc(){
 	count+=1;
 	console.log("message count: " + count + "\n");
 }
-
 //pauses thread after count spills over.
 function sleeper(){
 	try{
-		if(count > countMax){
-			console.log("meesage count max of " + countMax + ": " + count + "\n");
-			console.log("shutting down for " + sleepTimer + " min(s)");
-			//sleeps for x mins
-			sleep.sleep(sleepTimer * 60);	
-			count = 0;
-			console.log("\nstarting up again boy!\n");
-		}
+		console.log("meesage count max of " + countMax + ": " + count + "\n");
+		console.log("shutting down for " + sleepTimer + " min(s)");
+		//sleeps for x mins
+		sleep.sleep(sleepTimer * 60);	
+		count = 0;
+		console.log("\nstarting up again boy!\n");	
 	}catch(e){
 		console.log("e: " + e);
 	}
@@ -81,7 +78,9 @@ client.stream('statuses/filter', params, function (stream) {
 					
 					//incrementing counter
 					counterInc();
-					
+					//incrementing counter
+					counterInc();
+				} else{
 					//sleeper function
 					sleeper();
 				}
