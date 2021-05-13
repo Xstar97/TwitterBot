@@ -1,4 +1,4 @@
-const { auth, sleep, postReplyWithMedia, postReplyWithImg, postReply  } = require('./config.js');
+const { auth, sleep, postReplyWithMedia, postReply  } = require('./config.js');
 const client = auth();
 
 //variables
@@ -7,6 +7,13 @@ var countMax = 10;//sleeps once max count is hit.
 var sleepTimer=3;//mins
 var tag = "random word filter";//#noob
 var botName = "userName";
+
+const parameters = {
+  track: tag,
+  lang: 'en',
+  locale: 'en'
+};
+
 let msg = 
 [
 'Random message 1',
@@ -41,51 +48,54 @@ function sleeper(){
 
 
 //Seaching a filtered stream of tweets
-client.stream('statuses/filter', { track: tag }, function (stream) {
+client.stream('statuses/filter', parameters, function (stream) {
 	console.log("Searching for " + tag + " tweets...");
 	// when a tweet is found
 	stream.on('data', function (tweet) {
 		
-		//checking if tweet auther is not the bot or author
-		var userName = tweet.user.screen_name != botName;
-		var tweetData = tweet.text.includes(tag);//tweet.text.length != 0 && tweet.text != null
-		
-		if(userName || tweetData)
+		try
 		{
-			if(count <= countMax)
+			//checking if tweet auther is not the bot or author
+			var userName = tweet.user.screen_name != botName;
+			var tweetData = tweet.text.includes(tag) && tweet.text != null;//tweet.text.length != 0 && tweet.text != null
+			
+			if(userName && tweetData)
 			{
-			//logging a tweet was found
-			console.log("\nFound a tweet!\n__________________________\n");
-			//user name
-			console.log("User: " + tweet.user.screen_name);
-			//user's tweet
-			console.log("tweet says...\n", tweet.text);
+				if(count <= countMax)
+				{
+					//logging a tweet was found
+					console.log("\nFound a tweet!\n__________________________\n");
+					//user name and tweet
+					console.log("User: " + tweet.user.screen_name + " tweeted: \n", tweet.text);
+					
+					//our message
+			        var message = getMsg();
 			
-			//our message
-			var message = getMsg();
+			       //TODO uncomment the tweet option
+			       //tweet the victim
+			       //postReply(client, message, tweet);
+			       //console.log("\nreplying with a txt\n");
 			
-			//TODO uncomment the tweet option
-			//tweet the victim
-			//postReply(client, message, tweet);
-			//console.log("\nreplying with a txt\n");
-			
-			//postReplyWithImg(client, "./img.png", message, tweet);
-			//console.log("\nreplying with a image and txt\n");
+			       //postReplyWithImg(client, "./img.png", message, tweet);
+			       //console.log("\nreplying with a image and txt\n");
 				
-		        //postReplyWithMedia(client, "./animGif.gif", message, tweet);
-			//console.log("\nreplying with a gif and txt\n");
+		               //postReplyWithMedia(client, "./animGif.gif", message, tweet);
+			       //console.log("\nreplying with a gif and txt\n");
 			
-		        //postReplyWithMedia(client, "./video.mp4", message, tweet);
-			//console.log("\nreplying with a vid and txt\n");
-			
-			//incrementing counter
-			counterInc();
-			
-			//sleeper function
-			sleeper();
+		               //postReplyWithMedia(client, "./video.mp4", message, tweet);
+			       //console.log("\nreplying with a vid and txt\n");
+					
+			      //incrementing counter
+				counterInc();
+					
+				//sleeper function
+				sleeper();
+				}
 			}
-		}
-		//end of the line
+			//end of the line
+			}catch(e){
+				console.log("E: " + e);
+			}
 
     stream.on('error', function (error) {
       console.log(error);
