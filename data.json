@@ -1,4 +1,13 @@
 {
+  "keys": {
+	  "consumer_key":"XXXXXXXXXXXXXXXXXXXXXXXXX",
+	  "consumer_secret":"XXXXXXXXXXXXXXXXXXXXXXXX",
+	  "access_token_key":"XXXXXXXXXXX-XXXXXXXXX",
+	  "access_token_secret":"XXXXXXXXXXXXXXX",
+	  "request_options": {
+	  "proxy": ""
+    }
+    },
   "botName": "userName",
   "countMax": 10,
   "sleepTimer": 3,
