@@ -173,7 +173,7 @@ const postLike = (client, message, likeTweet) => {
 const postFollowUser = (client, message, twit) => {
 	
 	let obj = {
-        screen_name: twit.screen_name
+        screen_name: twit.user.screen_name
     }
 	// Follow a user using screen_name
 	_postFollowUser(client, obj, message, twit);
