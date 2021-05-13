@@ -57,7 +57,7 @@ client.stream('statuses/filter', params, function (stream) {
 			
 			if(userName && tweetData)
 			{
-				if(count <= countMax)
+				if(count < countMax)
 				{
 					//logging a tweet was found
 					console.log("\nFound a tweet!\n__________________________\n");
