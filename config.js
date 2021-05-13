@@ -3,6 +3,10 @@ const fs = require('fs');
 const Promise = require('bluebird')
 const dotenv = require("dotenv")
 const sleep = require('sleep');
+const data = require("./data.json");
+let rawdata = fs.readFileSync('./data.json');
+let configData = JSON.parse(rawdata);
+
 dotenv.config()
 
 // auth methods
@@ -232,4 +236,4 @@ const _postFollowUser = (client, obj, message, twit) => {
 		}).catch(console.error);
 }
 
-module.exports = { auth, sleep, postReplyWithMedia, postReply };
+module.exports = { auth, configData, fs, sleep, postReplyWithMedia, postReply };
