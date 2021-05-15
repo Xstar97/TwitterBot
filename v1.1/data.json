@@ -1,0 +1,57 @@
+{
+    "keys": {
+        "consumer_key":"XXXXXXXXXXXXXXXXXXXXXXXXX",
+        "consumer_secret":"XXXXXXXXXXXXXXXXXXXXXX",
+        "access_token_key":"XXXXXXXXXXXXXXXXX-XXXXXXXXXXXXX",
+        "access_token_secret":"XXXXXXXXXXXXXXXXXXXXXXXX",
+        "timeout_ms":1800000,
+        "request_options": {
+        "proxy": ""
+        }
+      },
+    "botName": "userName",
+    "defaultLang": "en",
+    "mediaDir":{
+        "en": "./media/en/",
+        "es": "./media/es/"
+    },
+    "parameters": {
+          "track":"#word",
+          "locale": "en",
+          "lang": "en"
+      },
+      "ignoreList": [
+        "user"
+      ],
+      "botActionDelayInSeconds": {
+        "tweet": 15,
+        "retweet": 15,
+        "like": 30,
+        "follow": 30
+    },
+      "botMsgList": {
+        "start": {
+            "en": "Hey, {TAG} bot is on and waiting to send you some cringe!"
+            },
+            "stale": {
+            "en": "huh, no tweets about {TAG} yet :("
+          },
+          "end": {
+          "en": "{TAG} bot shutting down :("
+          }
+      },
+      "botMsgActionDelayInMinutes": {
+        "stale": 30
+    },
+      "msgList":
+      [
+      {
+          "en": "random message in english",
+          "es": "random message in spanish"
+      },
+      {
+          "en": "random message in english",
+          "es": "random message in spanish"
+      },
+      ]
+  }
