@@ -41,7 +41,7 @@
           }
       },
       "botMsgActionDelayInMinutes": {
-        "stale": 30
+        "stale": 120
     },
       "msgList":
       [
