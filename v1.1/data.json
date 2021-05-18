@@ -11,36 +11,39 @@
       },
     "botName": "userName",
     "defaultLang": "en",
-    "mediaDir":{
-        "en": "./media/en/",
-        "es": "./media/es/"
+    "mediaDir": {
+        "en": "./media/"
     },
+    "recycleMediaIds": true,
+    "canShuffleMediaList": true,
+    "canShuffleMsgList": true,
     "parameters": {
-          "track":"#word",
-          "locale": "en",
-          "lang": "en"
-      },
-      "ignoreList": [
-        "user"
-      ],
-      "botActionDelayInSeconds": {
+        "track": "#word",
+        "locale": "en",
+        "lang": "en"
+    },
+    "ignoreList": [
+        "user1",
+        "user2"
+    ],
+    "botActionDelayInSeconds": {
         "tweet": 15,
         "retweet": 15,
         "like": 30,
         "follow": 30
     },
-      "botMsgList": {
+    "botMsgList": {
         "start": {
             "en": "Hey, {TAG} bot is on and waiting to send you some cringe!"
-            },
-            "stale": {
+        },
+        "stale": {
             "en": "huh, no tweets about {TAG} yet :("
-          },
-          "end": {
-          "en": "{TAG} bot shutting down :("
-          }
-      },
-      "botMsgActionDelayInMinutes": {
+        },
+        "end": {
+            "en": "{TAG} bot shutting down :("
+        }
+    },
+    "botMsgActionDelayInMinutes": {
         "stale": 120
     },
       "msgList":
